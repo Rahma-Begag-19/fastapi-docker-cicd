@@ -26,3 +26,18 @@ jobs:
       - name: Check application
         working-directory: backend
         run: python -m compileall app
+
+
+  docker-build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build backend image
+        run: docker build -t crm-backend-final ./backend
+
+      - name: Build frontend image
+        run: docker build -t crm-frontend-final ./frontend
