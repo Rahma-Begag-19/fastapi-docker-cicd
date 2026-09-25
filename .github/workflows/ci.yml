@@ -49,11 +49,11 @@ jobs:
       - name: Build and push backend image
         run: |
           docker build -t crm-backend-final ./backend
-          docker tag crm-backend-final ghcr.io/${{ github.repository }}/backend:latest
-          docker push ghcr.io/${{ github.repository }}/backend:latest
+          docker tag crm-backend-final ghcr.io/rahma-begag-19/fastapi-docker-cicd/backend:latest
+          docker push ghcr.io/rahma-begag-19/fastapi-docker-cicd/backend:latest
 
       - name: Build and push frontend image
         run: |
           docker build -t crm-frontend-final ./frontend
-          docker tag crm-frontend-final ghcr.io/${{ github.repository }}/frontend:latest
-          docker push ghcr.io/${{ github.repository }}/frontend:latest
+          docker tag crm-frontend-final ghcr.io/rahma-begag-19/fastapi-docker-cicd/frontend:latest
+          docker push ghcr.io/rahma-begag-19/fastapi-docker-cicd/frontend:latest
