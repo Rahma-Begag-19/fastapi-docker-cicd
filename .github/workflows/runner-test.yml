@@ -1,53 +1,26 @@
+
 name: Test Self-Hosted Runner
 
-on:
-  push:
-    branches: [ main ]
+"on":
   workflow_dispatch:
-
-permissions:
-  contents: read
+  push:
+    branches:
+      - main
 
 jobs:
-  test-self-hosted:
-    # The runner is persistent. Only trusted commits on main may reach it.
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    runs-on: [self-hosted, macOS, ARM64]
-    timeout-minutes: 15
+  test-runner:
+    name: Test on Kali Linux
+    runs-on: self-hosted
 
     steps:
-    - name: Display runner information
-      run: |
-        echo "Runner name: $RUNNER_NAME"
-        echo "Runner OS: $RUNNER_OS"
-        echo "Runner architecture: $RUNNER_ARCH"
-        echo "Workspace: $GITHUB_WORKSPACE"
-
-    - name: Display system information
-      run: |
-        echo "=== System Information ==="
-        uname -a
-        echo ""
-        echo "=== CPU Information ==="
-        sysctl -n machdep.cpu.brand_string
-        echo ""
-        echo "=== Memory Information ==="
-        system_profiler SPHardwareDataType | grep "Memory:"
-        echo ""
-        echo "=== Disk Space ==="
-        df -h /
-
-    - name: Test Python availability
-      run: |
-        echo "=== Python Version ==="
-        python3 --version
-        echo ""
-        echo "=== Pip Version ==="
-        pip3 --version
-
-    - name: Success message
-      run: |
-        echo "=========================================="
-        echo "Self-hosted runner test completed!"
-        echo "Runner is working correctly!"
-        echo "=========================================="
+      - name: Identify runner machine
+        run: |
+          echo "Hello from my self-hosted runner!"
+          echo "Username:"
+          whoami
+          echo "Hostname:"
+          hostname
+          echo "Operating system:"
+          uname -a
+          echo "Docker version:"
+          docker --version
