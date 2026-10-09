@@ -53,7 +53,6 @@ services:
     expose:
       - "8080"
 
-
   postgres-exporter:
     image: quay.io/prometheuscommunity/postgres-exporter:latest
     container_name: monitoring-postgres-exporter
@@ -68,9 +67,25 @@ services:
     expose:
       - "9187"
 
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: monitoring-alertmanager
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager-data:/alertmanager
+    ports:
+      - "127.0.0.1:9093:9093"
+    networks:
+      - default
+
 volumes:
   prometheus_data:
   grafana_data:
+  alertmanager-data:
 
 networks:
   default:
