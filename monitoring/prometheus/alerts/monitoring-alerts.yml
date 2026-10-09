@@ -1,0 +1,23 @@
+groups:
+  - name: monitoring
+    rules:
+      - alert: MonitoringTargetDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Monitoring target {{ $labels.job }} is down"
+          description: "Target {{ $labels.instance }} of job {{ $labels.job }} has been unreachable for more than 1 minute."
+
+      - alert: ContainerMemoryUsageHigh
+        expr: |
+          sum by (name) (
+            container_memory_working_set_bytes{name!="", image!=""}
+          ) / (1024 * 1024) > 512
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container {{ $labels.name }} using more than 512 MiB"
+          description: "Container {{ $labels.name }} has exceeded 512 MiB of memory usage for more than 5 minutes."
