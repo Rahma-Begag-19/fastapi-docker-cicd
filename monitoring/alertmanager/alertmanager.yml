@@ -1,9 +1,22 @@
+
+global:
+  smtp_smarthost: "smtp.gmail.com:587"
+  smtp_from: "cyberguru1903@gmail.com"
+  smtp_auth_username: "cyberguru1903@gmail.com"
+  smtp_auth_password_file: "/etc/alertmanager/secrets/smtp_password"
+  smtp_require_tls: true
+
 route:
-  receiver: "default"
+  receiver: "email-alerts"
   group_by: ["alertname"]
   group_wait: 30s
   group_interval: 5m
   repeat_interval: 4h
 
 receivers:
-  - name: "default"
+  - name: "email-alerts"
+    email_configs:
+      - to: "rahmabegag19@gmail.com"
+        send_resolved: true
+        headers:
+          Subject: '[DevOps Monitoring] {{ .Status | toUpper }}: {{ .CommonLabels.alertname }}'

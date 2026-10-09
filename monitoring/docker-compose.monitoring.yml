@@ -77,6 +77,7 @@ services:
     volumes:
       - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
       - alertmanager-data:/alertmanager
+      - ./alertmanager/secrets/smtp_password:/etc/alertmanager/secrets/smtp_password:ro
     ports:
       - "127.0.0.1:9093:9093"
     networks:
