@@ -19,5 +19,5 @@ groups:
         labels:
           severity: warning
         annotations:
-          summary: "Container {{ $labels.name }} using more than 512 MiB"
+          summary: "Container {{ $labels.name }} using more than 512 MiB (threshold can be set in this file)"
           description: "Container {{ $labels.name }} has exceeded 512 MiB of memory usage for more than 5 minutes."
