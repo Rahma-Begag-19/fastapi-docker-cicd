@@ -1,0 +1,19 @@
+name: Test Self-Hosted Runner
+
+on:
+workflow_dispatch:
+push:
+branches:
+- main
+
+jobs:
+test-runner:
+runs-on: self-hosted
+
+steps:
+  - name: Identify runner machine
+    run: |
+      echo "Hello from my self-hosted runner!"
+      whoami
+      hostname
+      uname -a
