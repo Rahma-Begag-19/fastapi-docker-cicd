@@ -53,6 +53,28 @@ services:
     expose:
       - "8080"
 
+
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    container_name: monitoring-postgres-exporter
+    restart: unless-stopped
+    environment:
+      DATA_SOURCE_URI: "crm-postgres-prod:5432/${POSTGRES_DB}?sslmode=disable"
+      DATA_SOURCE_USER: postgres_exporter
+      DATA_SOURCE_PASS: ${POSTGRES_EXPORTER_PASSWORD}
+    networks:
+      - default
+      - crm-monitoring
+    expose:
+      - "9187"
+
 volumes:
   prometheus_data:
   grafana_data:
+
+networks:
+  default:
+    name: monitoring_default
+  crm-monitoring:
+    external: true
+    name: fastapi-docker-cicd_default
