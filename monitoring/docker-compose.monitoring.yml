@@ -36,6 +36,22 @@ services:
     depends_on:
       - prometheus
 
+  cadvisor:
+    image: ghcr.io/google/cadvisor:latest
+    container_name: monitoring-cadvisor
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk:/dev/disk:ro
+    expose:
+      - "8080"
+
 volumes:
   prometheus_data:
   grafana_data:
