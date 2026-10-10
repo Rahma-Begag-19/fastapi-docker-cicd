@@ -2,7 +2,7 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: monitoring-prometheus
-    restart: unless-stopped
+#     restart: unless-stopped
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -16,7 +16,7 @@ services:
   node-exporter:
     image: prom/node-exporter:latest
     container_name: monitoring-node-exporter
-    restart: unless-stopped
+#     restart: unless-stopped
     command:
       - "--path.rootfs=/host"
     volumes:
@@ -27,7 +27,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: monitoring-grafana
-    restart: unless-stopped
+#     restart: unless-stopped
     ports:
       - "127.0.0.1:3000:3000"
     volumes:
@@ -40,7 +40,7 @@ services:
   cadvisor:
     image: ghcr.io/google/cadvisor:latest
     container_name: monitoring-cadvisor
-    restart: unless-stopped
+#     restart: unless-stopped
     privileged: true
     devices:
       - /dev/kmsg
@@ -56,7 +56,7 @@ services:
   postgres-exporter:
     image: quay.io/prometheuscommunity/postgres-exporter:latest
     container_name: monitoring-postgres-exporter
-    restart: unless-stopped
+#     restart: unless-stopped
     environment:
       DATA_SOURCE_URI: "crm-postgres-prod:5432/${POSTGRES_DB}?sslmode=disable"
       DATA_SOURCE_USER: postgres_exporter
@@ -70,7 +70,7 @@ services:
   alertmanager:
     image: prom/alertmanager:latest
     container_name: monitoring-alertmanager
-    restart: unless-stopped
+#     restart: unless-stopped
     command:
       - "--config.file=/etc/alertmanager/alertmanager.yml"
       - "--storage.path=/alertmanager"
